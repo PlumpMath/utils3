@@ -177,7 +177,11 @@ class Path(object):
             return p
 
     def show_permissions(self):
-        """ Return file permissions/ Works only on UNIX OS"""
+        """
+        Return file permissions/ Works only on UNIX OS
+
+        FIXME: TypeError: unsupported operand type(s) for &: 'str' and 'int'
+        """
         usr, grp, oth = self.perms()
         print("Owner  :", permissions(usr))
         print("Group  :", permissions(grp))
@@ -494,7 +498,7 @@ class Path(object):
         return Path(os.path.join(here, "data", filename))
 
     @classmethod
-    def interpreter(cls):
+    def executable(cls):
         """
         Returns the path where is the Python interpreter
 
