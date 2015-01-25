@@ -19,7 +19,40 @@ This modules provides the following submodules:
    * .windows       Windows OS Helpers for Python.
     
 
-# SUB MODULES
+# MODULES
+
+
+## Enum
+
+
+```python
+
+>>> colors = Enum(["blue", "red", "white", "green", "yellow"])
+>>> colors
+blue = 0, red = 1, white = 2, green = 3, yellow = 4
+>>> 
+>>> colors.blue
+0
+>>> colors.red
+1
+>>> colors.green
+3
+>>> 
+>>> colors.name(1)
+'red'
+>>> colors.name(2)
+'white'
+>>> colors.name(3)
+'green'
+>>> 
+
+
+```
+
+
+## Container 
+
+
 
 ## Path
 
@@ -431,13 +464,6 @@ Chain : [[22.3, 'a', 'b'], [433.3, 'y', 'o'], [3.4000000000000004, 'p', 'k']]
 ```
 
 
-## Enum
-
-## Cotainer 
-
-
-
-
-    
+  
    
 
