@@ -109,6 +109,19 @@ Examples:
 ['owned.jpg', 'network.sh', 'associacao-brasileira-de-normas-tecnicas-ufsm-alfa.csl']
 >>> 
 
+>>> # Newest File in Directory 
+... 
+>>> 
+>>> downloads = Path.home().get("Downloads")
+>>> 
+>>> downloads.newest()
+/home/tux/Downloads/mongodb-linux-i686-2.6.7
+>>> 
+>>> downloads.newest().path
+'/home/tux/Downloads/mongodb-linux-i686-2.6.7'
+>>> 
+
+
 >>> # Wak Directory 
 ... 
 >>>  Path.home().get("xen").walk()
@@ -142,6 +155,9 @@ Examples:
 
 ```python
 
+>>> # Test if it is file, directory of if it exists
+... 
+>>> 
 >>> xen =  Path.home().get("xen")
 >>> 
 >>> xen.path
@@ -171,6 +187,16 @@ False
 True
 >>> 
 >>> 
+
+>>> # Test if File is in directory
+... 
+>>> 'network' in xen
+False
+>>> 'network.sh' in xen
+True
+>>> 
+>>> 
+
 
 >>> # Get file Basename (file name without path)
 ... 
@@ -208,8 +234,39 @@ True
 190
 >>> 
 
->>> # Print file info
+>>> # File MD5 sum
 ... 
+>>> fp.md5()
+'7481e37d0a0cce49f0515cd963e0f361'
+>>> 
+
+>>> # Reading Files
+... 
+>>> fp.read()
+'echo 1 > /proc/sys/net/ipv4/ip_forward\niptables -t nat -A POSTROUTING -o wlan3 -j MASQUERADE\nifconfig xenbr0 10.0.0.1\nifconfig xenbr0 netmask 255.255.0.0\nsudo xm client /home/tux/xenwin7.cfg'
+>>> 
+>>> 
+
+>>> # Get File Permissions - Only works on UNIX like systems
+...
+>>> fp.owner()
+'tux'
+>>> fp.group()
+'tux'
+>>> fp.perms()
+['rw-', 'rw-', 'r--']
+>>> fp.perms(1)
+[6, 6, 4]
+>>> 
+>>> fp.gid()
+1000
+>>> fp.uid()
+1000
+>>> 
+>>> fp.perms()
+['rw-', 'rw-', 'r--']
+>>> 
+
 >>> fp.info()
 Path : /home/tux/xen/network.sh
 
@@ -224,32 +281,60 @@ Permissions: 664
 
 
 Size: 0.185546875 Megabytes
-
-
->>> # File MD5 sum
-... 
->>> fp.md5()
-'7481e37d0a0cce49f0515cd963e0f361'
 >>> 
-
-
-
-
-
->>> # Reading Files
-... 
->>> fp.read()
-'echo 1 > /proc/sys/net/ipv4/ip_forward\niptables -t nat -A POSTROUTING -o wlan3 -j MASQUERADE\nifconfig xenbr0 10.0.0.1\nifconfig xenbr0 netmask 255.255.0.0\nsudo xm client /home/tux/xenwin7.cfg'
->>> 
->>> 
-
-
-
 
 ```
 
+### Compressed Files
 
 
+```python
+
+
+>>> # Working with Compressed files
+... 
+>>> fp = Path.home() / "Downloads" / "Luhn_algor1946601162005.zip"
+>>> fp
+/home/tux/Downloads/Luhn_algor1946601162005.zip
+
+>>> fp.is_zip()
+True
+>>> 
+>>> fp.is_tar()
+False
+>>> 
+
+>>> # List Compressed file content
+...    
+>>> fp.list_archive()
+['@PSC_ReadMe_63180_1.txt', 'basCalculation.bas', 'frmMain.frm', 'frmMain.frx', 'kid.ico', 'KID.vbp']
+>>> 
+
+>>> # Extract Compressed File
+...
+>>> out = fp.extract("/tmp/content")
+>>>
+>>> out
+/tmp/content
+>>> out.list()
+['@PSC_ReadMe_63180_1.txt', 'kid.ico', 'frmMain.frx', 'basCalculation.bas', 'KID.vbp', 'frmMain.frm']
+>>> 
+>>> 
+
+>>> # Remove directory
+... 
+>>> out.rm()
+True
+>>> 
+>>> # Remove
+... 
+>>> out.is_dir()
+False
+>>> 
+ 
+
+
+```
 
 ## Chain
 
