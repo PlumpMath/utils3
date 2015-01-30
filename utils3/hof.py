@@ -1274,7 +1274,7 @@ def mapdict_keys(function, dic):
     return dict(map(lambda x: (function(x[0]), x[1]), dic.items()))
 
 
-def merge_dict(*dictionaries):
+def merge_dict(*dicts):
     """
     Merge a list of dictionaries returning a new one.
     
@@ -1282,12 +1282,11 @@ def merge_dict(*dictionaries):
     :return:             A new dicitonary
     :rtype:              dict
     """
-    result = {}
-
-    for d in dictionaries:
-        result.expand(d)
-
-    return result
+    dic = {}
+    for d in dicts:
+        if d is not None:
+            dic.update(d)
+    return dic
 
 
 def reverse_dict(dic):
@@ -1295,6 +1294,8 @@ def reverse_dict(dic):
     
     """
     return dictzip(*reverse(unzip_l(dic.items())))
+
+
 
 
 def product(list):

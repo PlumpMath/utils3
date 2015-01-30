@@ -1,23 +1,24 @@
 # UTILS3
 
-Python Helpers and utilities for Functional Programming, Fluent Interface and Path Manipulation compatilbe with 
-Python 3 and Python 2.7.
+Python Helpers and utilities for Functional Programming in Python compatilbe with Python 3 and Python 2.7.
 
 This modules provides the following submodules:
 
-   * .Chain         Chain class that is useful for piping, sequencial functional programming. Similar to Fsharp, Scala and Ruby.
+   * **Chain**         Chain class that is useful for piping, sequencial functional programming. Similar to Fsharp, Scala and Ruby.
    
-   * .Path          Fast and Syntax sugar Path Manipulation
+   * **Path**          Fast and Syntax sugar Path Manipulation to write path operations in pipeline and in sequence.
    
-   * .hof           A collections of higher order functions and functions for list and sequence processing based on functional 
-                    programming languages like Haskell, Fsharp, Ocaml and Ruby.
+      
+   * **Enum**          Enumeration Type Class/ Similar to C ENUM
    
-   * .Enum          Enumeration Type Class/ Similar to C ENUM
+   * **Container**     A Generalized dot dictionary
    
-   * .Container     A Generalized dot dictionary
+   * **hof**          A collections of Higher Order Functions and functions for list and sequence processing based on functional 
+                      programming languages like Haskell, Fsharp, Ocaml and Ruby.
    
-   * .windows       Windows OS Helpers for Python.
-    
+   * **windows**      Windows OS Helpers for Python.
+   
+   * **check**       Functions to test variable type,, test operating system and python version.
 
 # MODULES
 

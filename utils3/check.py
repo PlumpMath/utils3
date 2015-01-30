@@ -10,10 +10,6 @@ def is_python27():
 def is_python3():
     return sys.version_info.major == 3
 
-
-def is_empty(object):
-    return not object
-
 def is_list(var):
     """
     Test if variable var is list
@@ -52,7 +48,6 @@ def is_function(var):
 
 def is_none(var):
     return var is None
-
 
 def is_empty(lst):
     return len(lst) == 0

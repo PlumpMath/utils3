@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
+</head>
+<body>
+<h1 id="utils3">UTILS3</h1>
+<p>Python Helpers and utilities for Functional Programming in Python compatilbe with Python 3 and Python 2.7.</p>
+<p>This modules provides the following submodules:</p>
+<ul>
+<li><p><strong>Chain</strong> Chain class that is useful for piping, sequencial functional programming. Similar to Fsharp, Scala and Ruby.</p></li>
+<li><p><strong>Path</strong> Fast and Syntax sugar Path Manipulation to write path operations in pipeline and in sequence.</p></li>
+<li><p><strong>Enum</strong> Enumeration Type Class/ Similar to C ENUM</p></li>
+<li><p><strong>Container</strong> A Generalized dot dictionary</p></li>
+<li><p><strong>hof</strong> A collections of Higher Order Functions and functions for list and sequence processing based on functional<br /> programming languages like Haskell, Fsharp, Ocaml and Ruby.</p></li>
+<li><p><strong>windows</strong> Windows OS Helpers for Python.</p></li>
+<li><p><strong>check</strong> Functions to test variable type,, test operating system and python version.</p></li>
+</ul>
+<h1 id="modules">MODULES</h1>
+<h2 id="enum">Enum</h2>
+<pre class="sourceCode python"><code class="sourceCode python">
+&gt;&gt;&gt; colors = Enum([<span class="st">&quot;blue&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;white&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;yellow&quot;</span>])
+&gt;&gt;&gt; colors
+blue = <span class="dv">0</span>, red = <span class="dv">1</span>, white = <span class="dv">2</span>, green = <span class="dv">3</span>, yellow = <span class="dv">4</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; colors.blue
+<span class="dv">0</span>
+&gt;&gt;&gt; colors.red
+<span class="dv">1</span>
+&gt;&gt;&gt; colors.green
+<span class="dv">3</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; colors.name(<span class="dv">1</span>)
+<span class="co">&#39;red&#39;</span>
+&gt;&gt;&gt; colors.name(<span class="dv">2</span>)
+<span class="co">&#39;white&#39;</span>
+&gt;&gt;&gt; colors.name(<span class="dv">3</span>)
+<span class="co">&#39;green&#39;</span>
+&gt;&gt;&gt; 
+</code></pre>
+<h2 id="container">Container</h2>
+<h2 id="path">Path</h2>
+<p>Examples:</p>
+<h4 id="especial-directories">Especial Directories</h4>
+<pre class="sourceCode python"><code class="sourceCode python">    
+&gt;&gt;&gt; <span class="ch">from</span> utils3 <span class="ch">import</span> Path
+
+&gt;&gt;&gt; <span class="co"># Get current Directory Path</span>
+... 
+&gt;&gt;&gt; Path.pwd()
+/home/tux
+&gt;&gt;&gt; 
+
+
+&gt;&gt;&gt; <span class="co"># Get Home directory</span>
+... 
+&gt;&gt;&gt; Path.home()
+/home/tux
+&gt;&gt;&gt; 
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; <span class="co"># Get the directory where the script(calling) is located equivalent to __file__</span>
+... 
+&gt;&gt;&gt; Path.here()
+/home/tux/&lt;stdin&gt;
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Current Python runtime Path</span>
+... 
+&gt;&gt;&gt; Path.executable()
+/usr/<span class="dt">bin</span>/python3c
+&gt;&gt;&gt;</code></pre>
+<h4 id="path-concatenation">Path Concatenation</h4>
+<pre class="sourceCode python"><code class="sourceCode python">    
+&gt;&gt;&gt; <span class="ch">from</span> utils3 <span class="ch">import</span> Path
+
+&gt;&gt;&gt; <span class="co"># Concatenate Paths using the Slash operator</span>
+... 
+&gt;&gt;&gt; Path.home() / <span class="st">&quot;Downloads&quot;</span> 
+/home/tux/Downloads
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; Path.home().get(<span class="st">&quot;xen&quot;</span>)
+/home/tux/xen
+    </code></pre>
+<h4 id="listing-directories">Listing Directories</h4>
+<pre class="sourceCode python"><code class="sourceCode python">    
+&gt;&gt;&gt; <span class="ch">from</span> utils3 <span class="ch">import</span> Path
+
+&gt;&gt;&gt; <span class="co"># Listing Directories</span>
+...
+&gt;&gt;&gt; Path.home().get(<span class="st">&quot;xen&quot;</span>).<span class="dt">list</span>()
+[<span class="st">&#39;owned.jpg&#39;</span>, <span class="st">&#39;network.sh&#39;</span>, <span class="st">&#39;associacao-brasileira-de-normas-tecnicas-ufsm-alfa.csl&#39;</span>, <span class="st">&#39;win7&#39;</span>]
+&gt;&gt;&gt; 
+
+
+&gt;&gt;&gt; <span class="co"># List directory with absolute Path</span>
+...
+&gt;&gt;&gt; Path.home().get(<span class="st">&quot;xen&quot;</span>).<span class="dt">list</span>(<span class="dv">1</span>)
+[<span class="st">&#39;/home/tux/xen/owned.jpg&#39;</span>, <span class="st">&#39;/home/tux/xen/network.sh&#39;</span>, <span class="st">&#39;/home/tux/xen/associacao-brasileira-de-normas-tecnicas-ufsm-alfa.csl&#39;</span>, <span class="st">&#39;/home/tux/xen/win7&#39;</span>]
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># List only directories</span>
+... 
+&gt;&gt;&gt; Path.home().get(<span class="st">&quot;xen&quot;</span>).list_dirs()
+[<span class="st">&#39;win7&#39;</span>]
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># List only files</span>
+... 
+&gt;&gt;&gt; Path.home().get(<span class="st">&quot;xen&quot;</span>).list_files()
+[<span class="st">&#39;owned.jpg&#39;</span>, <span class="st">&#39;network.sh&#39;</span>, <span class="st">&#39;associacao-brasileira-de-normas-tecnicas-ufsm-alfa.csl&#39;</span>]
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Newest File in Directory </span>
+... 
+&gt;&gt;&gt; 
+&gt;&gt;&gt; downloads = Path.home().get(<span class="st">&quot;Downloads&quot;</span>)
+&gt;&gt;&gt; 
+&gt;&gt;&gt; downloads.newest()
+/home/tux/Downloads/mongodb-linux-i686<span class="fl">-2.6.7</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; downloads.newest().path
+<span class="co">&#39;/home/tux/Downloads/mongodb-linux-i686-2.6.7&#39;</span>
+&gt;&gt;&gt; 
+
+
+&gt;&gt;&gt; <span class="co"># Wak Directory </span>
+... 
+&gt;&gt;&gt;  Path.home().get(<span class="st">&quot;xen&quot;</span>).walk()
+[<span class="st">&#39;/home/tux/xen/owned.jpg&#39;</span>, <span class="st">&#39;/home/tux/xen/network.sh&#39;</span>, <span class="st">&#39;/home/tux/xen/associacao-brasileira-de-normas-tecnicas-ufsm-alfa.csl&#39;</span>, <span class="st">&#39;/home/tux/xen/win7/win7.cfg&#39;</span>, <span class="st">&#39;/home/tux/xen/win7/fullscreen.sh&#39;</span>, <span class="st">&#39;/home/tux/xen/win7/win7.sh&#39;</span>, <span class="st">&#39;/home/tux/xen/win7/win7.img&#39;</span>, <span class="st">&#39;/home/tux/xen/win7/README.txt&#39;</span>, <span class="st">&#39;/home/tux/xen/win7/.geanyprj&#39;</span>, <span class="st">&#39;/home/tux/xen/win7/desktop.sh&#39;</span>]
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Enter in directory or path</span>
+... 
+&gt;&gt;&gt; Path.home().get(<span class="st">&quot;xen&quot;</span>).cd()
+&gt;&gt;&gt; 
+&gt;&gt;&gt; os.getcwd()
+<span class="co">&#39;/home/tux/xen&#39;</span>
+&gt;&gt;&gt; 
+
+
+&gt;&gt;&gt; <span class="co"># Get Parent Directory</span>
+... 
+&gt;&gt;&gt; xen = Path.home().get(<span class="st">&quot;xen&quot;</span>)
+&gt;&gt;&gt; xen.top
+/home/tux
+&gt;&gt;&gt; 
+&gt;&gt;&gt; xen.top.top
+/home
+&gt;&gt;&gt; xen.top.top.top
+/
+&gt;&gt;&gt;
+    </code></pre>
+<h3 id="testing-files">Testing Files</h3>
+<pre class="sourceCode python"><code class="sourceCode python">
+&gt;&gt;&gt; <span class="co"># Test if it is file, directory of if it exists</span>
+... 
+&gt;&gt;&gt; 
+&gt;&gt;&gt; xen =  Path.home().get(<span class="st">&quot;xen&quot;</span>)
+&gt;&gt;&gt; 
+&gt;&gt;&gt; xen.path
+<span class="co">&#39;/home/tux/xen&#39;</span>
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; xen.is_file()
+<span class="ot">False</span>
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; xen.is_dir()
+<span class="ot">True</span>
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; 
+&gt;&gt;&gt; fp = xen.get(<span class="st">&quot;network.sh&quot;</span>)
+&gt;&gt;&gt; 
+&gt;&gt;&gt; fp.path
+<span class="co">&#39;/home/tux/xen/network.sh&#39;</span>
+
+&gt;&gt;&gt; fp.is_file()
+<span class="ot">True</span>
+&gt;&gt;&gt; fp.is_dir()
+<span class="ot">False</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; fp.exists()
+<span class="ot">True</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Test if File is in directory</span>
+... 
+&gt;&gt;&gt; <span class="st">&#39;network&#39;</span> in xen
+<span class="ot">False</span>
+&gt;&gt;&gt; <span class="st">&#39;network.sh&#39;</span> in xen
+<span class="ot">True</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; 
+
+
+&gt;&gt;&gt; <span class="co"># Get file Basename (file name without path)</span>
+... 
+&gt;&gt;&gt; fp.name
+<span class="co">&#39;network.sh&#39;</span>
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Get file directory</span>
+... 
+&gt;&gt;&gt; fp.<span class="dt">dir</span>
+/home/tux/xen
+&gt;&gt;&gt; <span class="co"># Get file Extension</span>
+... 
+&gt;&gt;&gt; fp.ext
+<span class="co">&#39;.sh&#39;</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; <span class="co"># Get file top diretory</span>
+... 
+&gt;&gt;&gt; fp.<span class="dt">dir</span>.top
+/home/tux
+&gt;&gt;&gt; 
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Modification Time</span>
+&gt;&gt;&gt; fp.mtime(<span class="dv">1</span>)             
+<span class="co">&#39;Fri Oct  3 00:53:51 2014&#39;</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; fp.mtime(<span class="dv">0</span>)         <span class="co"># Unix Timestamp</span>
+<span class="fl">1412308431.4800513</span>
+
+
+&gt;&gt;&gt; <span class="co"># Get file size</span>
+... 
+&gt;&gt;&gt; fp.size()
+<span class="dv">190</span>
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># File MD5 sum</span>
+... 
+&gt;&gt;&gt; fp.md5()
+<span class="co">&#39;7481e37d0a0cce49f0515cd963e0f361&#39;</span>
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Reading Files</span>
+... 
+&gt;&gt;&gt; fp.read()
+<span class="co">&#39;echo 1 &gt; /proc/sys/net/ipv4/ip_forward\niptables -t nat -A POSTROUTING -o wlan3 -j MASQUERADE\nifconfig xenbr0 10.0.0.1\nifconfig xenbr0 netmask 255.255.0.0\nsudo xm client /home/tux/xenwin7.cfg&#39;</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Get File Permissions - Only works on UNIX like systems</span>
+...
+&gt;&gt;&gt; fp.owner()
+<span class="co">&#39;tux&#39;</span>
+&gt;&gt;&gt; fp.group()
+<span class="co">&#39;tux&#39;</span>
+&gt;&gt;&gt; fp.perms()
+[<span class="st">&#39;rw-&#39;</span>, <span class="st">&#39;rw-&#39;</span>, <span class="st">&#39;r--&#39;</span>]
+&gt;&gt;&gt; fp.perms(<span class="dv">1</span>)
+[<span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">4</span>]
+&gt;&gt;&gt; 
+&gt;&gt;&gt; fp.gid()
+<span class="dv">1000</span>
+&gt;&gt;&gt; fp.uid()
+<span class="dv">1000</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; fp.perms()
+[<span class="st">&#39;rw-&#39;</span>, <span class="st">&#39;rw-&#39;</span>, <span class="st">&#39;r--&#39;</span>]
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; fp.info()
+Path : /home/tux/xen/network.sh
+
+Modification Time : Fri Oct  <span class="dv">3</span> <span class="dv">00</span>:<span class="dv">53</span>:<span class="dv">51</span> <span class="dv">2014</span>
+
+
+Owner:  tux - Uid:  <span class="dv">1000</span>
+Group:  tux - Gid:  <span class="dv">1000</span>
+
+Permissions: <span class="dv">664</span>
+    Owner: rw-  Group: rw-  Others: r--
+
+
+Size: <span class="fl">0.185546875</span> Megabytes
+&gt;&gt;&gt; </code></pre>
+<h3 id="compressed-files">Compressed Files</h3>
+<pre class="sourceCode python"><code class="sourceCode python">
+
+&gt;&gt;&gt; <span class="co"># Working with Compressed files</span>
+... 
+&gt;&gt;&gt; fp = Path.home() / <span class="st">&quot;Downloads&quot;</span> / <span class="st">&quot;Luhn_algor1946601162005.zip&quot;</span>
+&gt;&gt;&gt; fp
+/home/tux/Downloads/Luhn_algor1946601162005.<span class="dt">zip</span>
+
+&gt;&gt;&gt; fp.is_zip()
+<span class="ot">True</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; fp.is_tar()
+<span class="ot">False</span>
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># List Compressed file content</span>
+...    
+&gt;&gt;&gt; fp.list_archive()
+[<span class="st">&#39;@PSC_ReadMe_63180_1.txt&#39;</span>, <span class="st">&#39;basCalculation.bas&#39;</span>, <span class="st">&#39;frmMain.frm&#39;</span>, <span class="st">&#39;frmMain.frx&#39;</span>, <span class="st">&#39;kid.ico&#39;</span>, <span class="st">&#39;KID.vbp&#39;</span>]
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Extract Compressed File</span>
+...
+&gt;&gt;&gt; out = fp.extract(<span class="st">&quot;/tmp/content&quot;</span>)
+&gt;&gt;&gt;
+&gt;&gt;&gt; out
+/tmp/content
+&gt;&gt;&gt; out.<span class="dt">list</span>()
+[<span class="st">&#39;@PSC_ReadMe_63180_1.txt&#39;</span>, <span class="st">&#39;kid.ico&#39;</span>, <span class="st">&#39;frmMain.frx&#39;</span>, <span class="st">&#39;basCalculation.bas&#39;</span>, <span class="st">&#39;KID.vbp&#39;</span>, <span class="st">&#39;frmMain.frm&#39;</span>]
+&gt;&gt;&gt; 
+&gt;&gt;&gt; 
+
+&gt;&gt;&gt; <span class="co"># Remove directory</span>
+... 
+&gt;&gt;&gt; out.rm()
+<span class="ot">True</span>
+&gt;&gt;&gt; 
+&gt;&gt;&gt; <span class="co"># Remove</span>
+... 
+&gt;&gt;&gt; out.is_dir()
+<span class="ot">False</span>
+&gt;&gt;&gt; 
+ 
+</code></pre>
+<h2 id="chain">Chain</h2>
+<p>Examples:</p>
+<pre class="sourceCode python"><code class="sourceCode python">
+&gt;&gt;&gt; <span class="ch">from</span> utils3 <span class="ch">import</span> Chain
+&gt;&gt;&gt;
+&gt;&gt;&gt; x = Chain([[<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>], [<span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>], [<span class="st">&#39;44&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>]])
+
+&gt;&gt;&gt;
+&gt;&gt;&gt; x
+Chain : [[<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>], [<span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>], [<span class="st">&#39;44&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>]]
+&gt;&gt;&gt;
+
+Test <span class="kw">if</span> Chain is empty
+&gt;&gt;&gt; x.is_empty()
+<span class="ot">False</span>
+
+Flat All sublists
+&gt;&gt;&gt; x.flat()
+Chain : [<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>, <span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>, <span class="st">&#39;44&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>]
+
+Get an Element by Position
+&gt;&gt;&gt; x[<span class="dv">0</span>]
+[<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>]
+&gt;&gt;&gt; x[<span class="dv">1</span>]
+[<span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>]
+
+Count the Number of Elements
+&gt;&gt;&gt; x.count()
+<span class="dv">3</span>
+
+Get an Element of each sublist by postion in this <span class="dt">list</span>
+&gt;&gt;&gt; x.select_pos(<span class="dv">0</span>)             <span class="co"># Get the element 0 in each sublist</span>
+Chain : [<span class="st">&#39;233&#39;</span>, <span class="st">&#39;4343&#39;</span>, <span class="st">&#39;44&#39;</span>]
+&gt;&gt;&gt; x.select_pos(<span class="dv">1</span>)             <span class="co"># Get the element 1 in each sublist</span>
+Chain : [<span class="st">&#39;a&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;p&#39;</span>]
+&gt;&gt;&gt; x.select_pos(<span class="dv">2</span>)
+Chain : [<span class="st">&#39;b&#39;</span>, <span class="st">&#39;o&#39;</span>, <span class="st">&#39;k&#39;</span>]
+&gt;&gt;&gt; x.select_pos(<span class="dv">3</span>)
+Chain : [<span class="ot">None</span>, <span class="ot">None</span>, <span class="ot">None</span>]
+
+
+&gt;&gt;&gt; x.<span class="dt">enumerate</span>()
+Chain : [(<span class="dv">0</span>, [<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>]), (<span class="dv">1</span>, [<span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>]), (<span class="dv">2</span>, [<span class="st">&#39;44&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>])]
+
+Add a New Element to the <span class="dt">list</span>
+&gt;&gt;&gt; x.append([<span class="st">&#39;1669&#39;</span>, <span class="st">&#39;u&#39;</span>, <span class="st">&#39;k&#39;</span>])
+Chain : [[<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>], [<span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>], [<span class="st">&#39;44&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>], [<span class="st">&#39;1669&#39;</span>, <span class="st">&#39;u&#39;</span>, <span class="st">&#39;k&#39;</span>]]
+
+
+Reversing a <span class="dt">list</span>, creates a new <span class="dt">list</span>
+&gt;&gt;&gt; x.reverse()
+Chain : [[<span class="st">&#39;44&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>], [<span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>], [<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>]]
+
+Retrive the Original Data
+&gt;&gt;&gt; x.<span class="dt">list</span>
+[[<span class="st">&#39;233&#39;</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>], [<span class="st">&#39;4343&#39;</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>], [<span class="st">&#39;44&#39;</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>]]
+
+
+Converting a sequence of strings to Int
+&gt;&gt;&gt; x.select_pos(<span class="dv">0</span>).to_int()
+Chain : [<span class="dv">233</span>, <span class="dv">4343</span>, <span class="dv">44</span>]
+
+&gt;&gt;&gt; x.select_pos(<span class="dv">0</span>).to_int().<span class="dt">list</span>
+[<span class="dv">233</span>, <span class="dv">4343</span>, <span class="dv">44</span>]
+
+&gt;&gt;&gt; x.select_pos(<span class="dv">0</span>).to_float().<span class="dt">list</span>
+[<span class="dv">233</span>, <span class="dv">4343</span>, <span class="dv">44</span>]
+
+&gt;&gt;&gt; x.update_pos(<span class="kw">lambda</span> x: <span class="dt">float</span>(x)/<span class="dv">10</span>, <span class="dv">0</span>)
+Chain : [[<span class="fl">23.3</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>], [<span class="fl">434.3</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>], [<span class="fl">4.4</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>]]
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; y = x.update_pos(<span class="kw">lambda</span> x: <span class="dt">float</span>(x)/<span class="dv">10</span> -<span class="dv">1</span>, <span class="dv">0</span>)
+&gt;&gt;&gt; y
+Chain : [[<span class="fl">22.3</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>], [<span class="fl">433.3</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>], [<span class="fl">3.4000000000000004</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>]]
+
+
+&gt;&gt;&gt; y.select_by_pos(<span class="kw">lambda</span> x: x &gt; <span class="dv">20</span>, <span class="dv">0</span>)
+[[<span class="fl">22.3</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>], [<span class="fl">433.3</span>, <span class="st">&#39;y&#39;</span>, <span class="st">&#39;o&#39;</span>]]
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; y.select_by_pos(<span class="kw">lambda</span> x: x&lt;<span class="dv">10</span>, <span class="dv">0</span>)
+[[<span class="fl">3.4000000000000004</span>, <span class="st">&#39;p&#39;</span>, <span class="st">&#39;k&#39;</span>]]
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; y.select_by_pos(<span class="kw">lambda</span> x: x == <span class="st">&#39;a&#39;</span>, <span class="dv">1</span>)
+[[<span class="fl">22.3</span>, <span class="st">&#39;a&#39;</span>, <span class="st">&#39;b&#39;</span>]]
+&gt;&gt;&gt;</code></pre>
+</body>
+</html>

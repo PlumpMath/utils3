@@ -15,7 +15,6 @@ lines = Path.home().get(".bashrc").read().splitlines()
 #
 # pprint(dict(result.list))
 
-p = Chain(["ifconfig"]).run()
 
 print(p)
 

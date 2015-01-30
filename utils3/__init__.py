@@ -6,6 +6,13 @@ This Module Provides Useful Python functions
 Path: Path Manipulalation API and listing
 
 """
+
+
+__author__ = "Caio Rodrigues Soares Silva"
+__version__ = "0.1"
+__email__ = "caiorss.rodrigues@gmail.com"
+
+
 import sys
 import os 
 

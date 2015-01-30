@@ -471,13 +471,7 @@ class Path(object):
         """Execute Python Script"""
         exec(self.read())
 
-    def execute(self):
-        """
-        Execute self.path, runs it as a command.
 
-        """
-        pid = Popen([self.path])
-        return pid
 
     @classmethod
     def datafile(cls, filename=""):
@@ -507,5 +501,69 @@ class Path(object):
         """
         return Path(sys.executable)
 
+    def run(self):
+        """
+        Execute self.path, runs it as a command.
+        The path is pointing to an executable.
 
+        """
+        pid = Popen([self.path])
+        return pid
+
+    def open_with(self, application):
+        """
+        Open file with an external program.
+
+        :param application: Application to open the file
+        :return:
+
+        Example:
+
+            import utils3 as u
+            img = u.Path("/opt/pycharm2/bin/pycharm.png")
+            img.open_with("xdg-open")
+
+        """
+        p = Popen([application, self.path])
+        return p
+
+
+    def scan(self, formats=""):
+        """
+        Scan directory and return the absolute path of each file
+        found that matches a given pattern
+
+
+        :param formats: List of patterns, eg.:  [ ".txt", "*.flv" ]
+        :return:        List of files found with the given pattern.
+
+
+        Example:
+
+        In [11]:  p = u.Path.pwd()
+
+        In [12]: p
+        Out[12]: /home/tux/Downloads
+
+        In [13]: p.scan(["*.pdf"])
+        Out[13]:
+        ['/home/tux/Downloads/2013 CFA Level 2 - Book 5.pdf',
+         '/home/tux/Downloads/01_Martin_Fowler_dsl-intro.pdf',
+         '/home/tux/Downloads/2014 CFA Level 1 Book 3.pdf',
+         '/home/tux/Downloads/Introduction to R for Quanti
+        ...
+        """
+
+        # import fnmatch
+        # import os
+
+        #formats = ['*.ogg', '*.mp4', '*.wmv', '*.flv']
+        matches = []
+
+        for root, dirnames, filenames in os.walk(self.path, followlinks=True):
+            for extensions in formats:
+                for filename in fnmatch.filter(filenames, extensions):
+                    matches.append(os.path.join(root, filename))
+
+        return matches
 

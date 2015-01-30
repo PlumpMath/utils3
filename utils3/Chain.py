@@ -113,6 +113,9 @@ from .check import is_empty, is_none, is_empty, is_list, is_tuple
 
 from subprocess import Popen, PIPE
 
+from datetime import datetime
+
+
 import re
 
 def flatten(List):
@@ -168,6 +171,52 @@ def runcmd(command):
 
 
     return "\n".join([out, err]).strip('\n\r')
+
+
+def date_dmy(datestr, separator="/"):
+    """
+    Parse Date Format  dd/mm/yyyy
+
+
+    :param datestr:     Date string
+    :param separator:   Date string separator
+    :return:            datetime.datetime object
+
+    Example:  01/12/2013
+
+    """
+    fmt = "%d{separator}%m{separator}%Y".format(separator=separator)
+    return datetime.strptime(datestr, fmt)
+
+
+def date_mdy(datestr, separator="/"):
+    """
+    Parse American Date Format  mm/dd/yyyy
+
+
+    :param datestr:     Date string
+    :param separator:   Date string separator
+    :return:            datetime.datetime object
+
+    """
+    fmt = "%m{separator}%d{separator}%Y".format(separator=separator)
+    return datetime.strptime(datestr, fmt)
+
+
+def date_ymd(datestr, separator="/"):
+    """
+    Parse Date Format  yyyy/mm/dd
+    Example:  2013/12/01
+
+    :param datestr:     Date string
+    :param separator:   Date string separator
+    :return:            datetime.datetime object
+
+    """
+    fmt = "%Y{separator}%m{separator}%d".format(separator=separator)
+    return datetime.strptime(datestr, fmt)
+
+
 
 
 
@@ -251,8 +300,11 @@ class Chain(object):
     def join(self, param=""):
         return param.join(hof.mapl(str, self.list))
 
-    def get(self, attribute):
-        return Chain(hof.mapl(hof.get(attribute), self.list))
+    def get_attr(self, attribute):
+        return Chain(hof.mapl(lambda obj: getattr(obj, attribute), self.list))
+
+    def get_key(self, key):
+        return Chain(hof.mapl(lambda obj: obj[key], self.list))
 
     def count(self):
         return len(self.list)
@@ -301,7 +353,16 @@ class Chain(object):
         return Chain(hof.mapl(lambda x: int(x), self.list))
 
     def to_float(self):
-        return Chain(hof.mapl(lambda x: int(x), self.list))
+        return Chain(hof.mapl(lambda x: float(x), self.list))
+
+    def to_date_ymd(self, separator):
+        return Chain(hof.mapl(lambda x: date_ymd(x, separator), self.list))
+
+    def to_date_dmy(self, separator):
+        return Chain(hof.mapl(lambda x: date_dmy(x, separator), self.list))
+
+    def to_date_mdy(self, separator):
+        return Chain(hof.mapl(lambda x: date_mdy(x, separator), self.list))
 
     def to_str(self):
         return Chain(hof.mapl(lambda x: str(x), self.list))
